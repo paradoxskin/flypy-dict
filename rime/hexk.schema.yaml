@@ -1,0 +1,76 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: "hexk"
+  name: "鹤形"
+  version: "0.0.1"
+  icon: "hedn.ico"
+  ascii_icon: "en.ico"
+
+switches:
+  - name: simplification
+    reset: 0
+    states: [简, 繁]
+  - name: full_shape
+    reset: 0
+    states: [半, 全]
+  - name: ascii_punct
+    reset: 0
+    states: [。,.]
+
+engine:
+  processors:
+    - key_binder
+    - ascii_composer
+    - speller
+    - punctuator
+    - selector
+    - express_editor
+  segmentors:
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - table_translator
+  filters:
+    - simplifier
+    - uniquifier
+
+ascii_composer:
+  switch_key:
+    Shift_L: commit_code
+    Shift_R: commit_code
+
+speller:
+  max_code_length: 4
+  auto_select: true
+  auto_select_unique_candidate: true
+  auto_clear: max_length
+
+translator:
+  dictionary: flypy
+  enable_charset_filter: false
+  enable_encoder: false
+  enable_sentence: false
+  encode_commit_history: false
+  enable_completion: false
+  enable_user_dict: false
+  max_phrase_length: 16
+
+simplifier:
+  option_name: simplification
+  opencc_config: s2t.json
+
+punctuator:
+  import_preset: symbols
+
+key_binder:
+  bindings:
+    - {when: has_menu, accept: bracketleft, send: Page_Up}
+    - {when: has_menu, accept: bracketright, send: Page_Down}
+    - {when: has_menu, accept: space, send: space}
+    - {when: composing, accept: Tab, send: Return}
+    - {when: composing, accept: semicolon, send: 2}
+    - {when: composing, accept: space, send: Escape}
