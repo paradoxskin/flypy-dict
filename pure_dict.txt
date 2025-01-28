@@ -1,7 +1,3 @@
-;fcitx Version 0x03 Table file
-键码=abcdefghijklmnopqrstuvwxyz;
-码长=4
-[数据]
 a 啊
 a 按
 aa 阿
